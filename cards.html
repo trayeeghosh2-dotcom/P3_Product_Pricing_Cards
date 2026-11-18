@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Responsive Product Pricing Cards</title>
+
+<style>
+
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+/* Main Container */
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 55px 20px;
+}
+
+/* Heading */
+.heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.heading h1 {
+    font-size: 36px;
+    color: #172554;
+    margin-bottom: 12px;
+}
+
+.heading p {
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Billing Toggle */
+.billing-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 45px;
+}
+
+.billing-area span {
+    font-weight: bold;
+    color: #64748b;
+}
+
+.billing-area span.active {
+    color: #172554;
+}
+
+.toggle {
+    width: 60px;
+    height: 30px;
+    background: #2563eb;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.toggle-circle {
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    transition: 0.3s;
+}
+
+.toggle.yearly .toggle-circle {
+    left: 34px;
+}
+
+.save-text {
+    background: #dcfce7;
+    color: #15803d !important;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* Pricing Cards */
+.pricing-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    align-items: stretch;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 32px 25px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+/* Hover Effect */
+.card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 15px 35px rgba(37,99,235,0.15);
+    border-color: #2563eb;
+}
+
+/* Popular Plan */
+.popular {
+    border: 2px solid #2563eb;
+    transform: scale(1.04);
+}
+
+.popular:hover {
+    transform: scale(1.04) translateY(-12px);
+}
+
+.popular-label {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2563eb;
+    color: white;
+    padding: 7px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Plan Details */
+.card h2 {
+    font-size: 24px;
+    margin: 15px 0;
+    color: #172554;
+}
+
+.plan-description {
+    color: #64748b;
+    font-size: 14px;
+    min-height: 40px;
+    line-height: 1.5;
+}
+
+/* Price */
+.price {
+    margin: 25px 0;
+    color: #172554;
+}
+
+.currency {
+    font-size: 22px;
+    vertical-align: top;
+}
+
+.amount {
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.period {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Features */
+.features {
+    list-style: none;
+    text-align: left;
+    margin: 25px 0;
+}
+
+.features li {
+    padding: 11px 0;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+    font-size: 14px;
+}
+
+.features li::before {
+    content: "✓";
+    color: #16a34a;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Buttons */
+.plan-btn {
+    width: 100%;
+    padding: 14px;
+    background: #172554;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.plan-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+.popular .plan-btn {
+    background: #2563eb;
+}
+
+.popular .plan-btn:hover {
+    background: #1d4ed8;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 25px 15px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media(max-width: 850px) {
+
+    .pricing-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .popular {
+        transform: none;
+    }
+
+    .popular:hover {
+        transform: translateY(-12px);
+    }
+}
+
+@media(max-width: 600px) {
+
+    .pricing-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .heading h1 {
+        font-size: 28px;
+    }
+
+    .card {
+        padding: 30px 22px;
+    }
+
+    .billing-area {
+        gap: 9px;
+    }
+
+    .save-text {
+        font-size: 10px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Heading -->
+    <div class="heading">
+
+        <h1>Choose Your Perfect Plan</h1>
+
+        <p>
+            Simple and affordable pricing plans
+            for everyone. Choose the best plan for you!
+        </p>
+
+    </div>
+
+
+    <!-- Monthly / Yearly Toggle -->
+    <div class="billing-area">
+
+        <span id="monthlyText" class="active">
+            Monthly
+        </span>
+
+        <button
+            class="toggle"
+            id="billingToggle"
+            onclick="toggleBilling()"
+            aria-label="Switch between monthly and yearly billing"
+            aria-pressed="false">
+
+            <span class="toggle-circle"></span>
+
+        </button>
+
+        <span id="yearlyText">
+            Yearly
+        </span>
+
+        <span class="save-text">
+            Save 20%
+        </span>
+
+    </div>
+
+
+    <!-- Pricing Cards -->
+    <div class="pricing-container">
+
+
+        <!-- Basic Plan -->
+        <div class="card">
+
+            <h2>Basic</h2>
+
+            <p class="plan-description">
+                Perfect for beginners and individuals.
+            </p>
+
+            <div class="price">
+
+                <span class="currency">₹</span>
+
+                <span class="amount" id="basicPrice">
+                    199
+                </span>
+
+                <span class="period" id="basicPeriod">
+                    /month
+                </span>
+
+            </div>
+
+            <ul class="features">
+
+                <li>1 User Account</li>
+
+                <li>5 Projects</li>
+
+                <li>Basic Support</li>
+
+                <li>5 GB Storage</li>
+
+                <li>Basic Features</li>
+
+            </ul>
+
+            <button
+                class="plan-btn"
+                onclick="choosePlan('Basic')">
+
+                Choose Basic
+
+            </button>
+
+        </div>
+
+
+        <!-- Pro Plan -->
+        <div class="card popular">
+
+            <div class="popular-label">
+                MOST POPULAR
+            </div>
+
+            <h2>Professional</h2>
+
+            <p class="plan-description">
+                Ideal for professionals and growing teams.
+            </p>
+
+            <div class="price">
+
+                <span class="currency">₹</span>
+
+                <span class="amount" id="proPrice">
+                    499
+                </span>
+
+                <span class="period" id="proPeriod">
+                    /month
+                </span>
+
+            </div>
+
+            <ul class="features">
+
+                <li>5 User Accounts</li>
+
+                <li>Unlimited Projects</li>
+
+                <li>Priority Support</li>
+
+                <li>50 GB Storage</li>
+
+                <li>Advanced Features</li>
+
+            </ul>
+
+            <button
+                class="plan-btn"
+                onclick="choosePlan('Professional')">
+
+                Choose Professional
+
+            </button>
+
+        </div>
+
+
+        <!-- Premium Plan -->
+        <div class="card">
+
+            <h2>Premium</h2>
+
+            <p class="plan-description">
+                Best for businesses and large teams.
+            </p>
+
+            <div class="price">
+
+                <span class="currency">₹</span>
+
+                <span class="amount" id="premiumPrice">
+                    999
+                </span>
+
+                <span class="period" id="premiumPeriod">
+                    /month
+                </span>
+
+            </div>
+
+            <ul class="features">
+
+                <li>Unlimited Users</li>
+
+                <li>Unlimited Projects</li>
+
+                <li>24/7 Support</li>
+
+                <li>Unlimited Storage</li>
+
+                <li>All Premium Features</li>
+
+            </ul>
+
+            <button
+                class="plan-btn"
+                onclick="choosePlan('Premium')">
+
+                Choose Premium
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Footer -->
+<footer>
+
+    <p>
+        © 2026 Pricing Plans | Responsive Product Pricing Cards
+    </p>
+
+    <p>
+        Created using HTML, CSS and JavaScript
+    </p>
+
+</footer>
+
+
+<script>
+
+// Billing type
+let isYearly = false;
+
+
+// Monthly and yearly prices
+const prices = {
+
+    basic: {
+        monthly: 199,
+        yearly: 1999
+    },
+
+    pro: {
+        monthly: 499,
+        yearly: 4999
+    },
+
+    premium: {
+        monthly: 999,
+        yearly: 9999
+    }
+
+};
+
+
+// Toggle Monthly and Yearly Billing
+function toggleBilling() {
+
+    isYearly = !isYearly;
+
+    const toggle =
+        document.getElementById("billingToggle");
+
+    const monthlyText =
+        document.getElementById("monthlyText");
+
+    const yearlyText =
+        document.getElementById("yearlyText");
+
+
+    // Change toggle position
+    toggle.classList.toggle("yearly", isYearly);
+
+    toggle.setAttribute("aria-pressed", isYearly);
+
+
+    // Update active text
+    monthlyText.classList.toggle("active", !isYearly);
+
+    yearlyText.classList.toggle("active", isYearly);
+
+
+    // Update prices
+    updatePrices();
+
+}
+
+
+// Update all pricing cards
+function updatePrices() {
+
+    if (isYearly) {
+
+        document.getElementById("basicPrice").textContent =
+            prices.basic.yearly;
+
+        document.getElementById("proPrice").textContent =
+            prices.pro.yearly;
+
+        document.getElementById("premiumPrice").textContent =
+            prices.premium.yearly;
+
+
+        document.getElementById("basicPeriod").textContent =
+            "/year";
+
+        document.getElementById("proPeriod").textContent =
+            "/year";
+
+        document.getElementById("premiumPeriod").textContent =
+            "/year";
+
+    } else {
+
+        document.getElementById("basicPrice").textContent =
+            prices.basic.monthly;
+
+        document.getElementById("proPrice").textContent =
+            prices.pro.monthly;
+
+        document.getElementById("premiumPrice").textContent =
+            prices.premium.monthly;
+
+
+        document.getElementById("basicPeriod").textContent =
+            "/month";
+
+        document.getElementById("proPeriod").textContent =
+            "/month";
+
+        document.getElementById("premiumPeriod").textContent =
+            "/month";
+
+    }
+
+}
+
+
+// Choose a pricing plan
+function choosePlan(planName) {
+
+    let billingType =
+        isYearly ? "Yearly" : "Monthly";
+
+    alert(
+        "You selected the " +
+        planName +
+        " plan with " +
+        billingType +
+        " billing.\n\n" +
+        "Thank you for choosing our plan!"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
